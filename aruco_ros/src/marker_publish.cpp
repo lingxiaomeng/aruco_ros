@@ -198,6 +198,12 @@ public:
             tf::Transform transform = aruco_ros::arucoMarker2Tf(markers_[i]);
             transform = static_cast<tf::Transform>(cameraToReference) * transform;
             tf::poseTFToMsg(transform, marker_i.pose.pose);
+            for(std::size_t j = 0; j<4; ++j){
+              geometry_msgs::Point point;
+              point.x = markers_[i][j].x;
+              point.y = markers_[i][j].y;
+              marker_i.corners.push_back(point);
+            }
             marker_i.header.frame_id = reference_frame_;
           }
         }
